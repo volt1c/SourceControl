@@ -1,17 +1,30 @@
-version: '3.9'
+version: "3.8"
 services:
-    gitlab:
-        image: gitlab/gitlab-ce:latest
-        container_name: gitlab
-        restart: always
-        hostname: 'gitlab.domain.local'
-        ports:
-          - '80:80'
-          - '443:443'
-          - '22:22'
-        volumes: 
-          - '$GITLAB_HOME/config:/etc/gitlab'
-          - '$GITLAB_HOME/logs:/var/log/gitlab'
-          - '$GITLAB_HOME/data:/var/opt/gitlab'
-        shm_size: '512m'
-        
+  gitlab-server:
+    image: "gitlab/gitlab-ce:latest"
+    container_name: gitlab-server
+    restart: always
+    ports:
+      - "8088:80"
+    environment:
+      # GITLAB_ROOT_EMAIL: "admin@somemail.com"
+      GITLAB_ROOT_PASSWORD: "zaq1@WSX"
+    volumes:
+      - ./gitlab/config:/etc/gitlab
+      - ./gitlab/data:/var/opt/gitlab
+    shm_size: "512m"
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - 8081:8080
+      - 50000:50000
+    volumes:
+      - ~/jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/bin/docker:/usr/local/bin/docker
+# docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword

@@ -1,8 +1,8 @@
 version: "3.8"
 services:
-  gitlab-server:
+  gitlab:
     image: "gitlab/gitlab-ce:latest"
-    container_name: gitlab-server
+    container_name: gitlab
     restart: always
     ports:
       - "8088:80"
@@ -12,6 +12,8 @@ services:
     volumes:
       - ./gitlab/config:/etc/gitlab
       - ./gitlab/data:/var/opt/gitlab
+    networks:
+      - bridge_network
     shm_size: "512m"
 
   jenkins:
@@ -21,10 +23,32 @@ services:
     privileged: true
     user: root
     ports:
-      - 8081:8080
+      - 8081:80
       - 50000:50000
+    environment:
+      JENKINS_OPTS: "--httpPort=80"
     volumes:
       - ./jenkins:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/local/bin/docker
-# docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+    networks:
+      - bridge_network
+
+    # docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - bridge_network
+
+
+
+networks:
+  bridge_network:
+    driver: bridge

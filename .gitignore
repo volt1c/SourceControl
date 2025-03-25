@@ -1,4 +1,7 @@
 .vs
 
-gitlab
-jenkins
+gitlab/**
+!gitlab/Dockerfile
+
+jenkins/**
+!jenkins/Dockerfile

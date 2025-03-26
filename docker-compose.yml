@@ -33,7 +33,6 @@ services:
     networks:
       - bridge_network
 
-    # docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
   nginx:
     image: nginx
     container_name: nginx

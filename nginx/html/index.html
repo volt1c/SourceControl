@@ -56,7 +56,6 @@
       urlCell.appendChild(link);
     }
 
-    setupServiceInfo("gitlab");
-    setupServiceInfo("jenkins");
+    ["gitlab", "jenkins"].forEach(setupServiceInfo);
   </script>
 </html>

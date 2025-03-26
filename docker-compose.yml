@@ -5,7 +5,7 @@ services:
     container_name: gitlab
     restart: always
     ports:
-      - "8088:80"
+      - "8082:80"
     environment:
       GITLAB_ROOT_PASSWORD: "zaq1@WSX"
     volumes:

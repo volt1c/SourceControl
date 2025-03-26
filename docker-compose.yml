@@ -10,8 +10,8 @@ services:
       # GITLAB_ROOT_EMAIL: "admin@somemail.com"
       GITLAB_ROOT_PASSWORD: "zaq1@WSX"
     volumes:
-      - ./gitlab/config:/etc/gitlab
-      - ./gitlab/data:/var/opt/gitlab
+      - ./.volumes/gitlab/config:/etc/gitlab
+      - ./.volumes/gitlab/data:/var/opt/gitlab
     networks:
       - bridge_network
     shm_size: "512m"
@@ -28,7 +28,7 @@ services:
     environment:
       JENKINS_OPTS: "--httpPort=80"
     volumes:
-      - ./jenkins:/var/jenkins_home
+      - ./.volumes/jenkins/jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/local/bin/docker
     networks:

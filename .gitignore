@@ -1,7 +1,2 @@
 .vs
-
-gitlab/**
-!gitlab/Dockerfile
-
-jenkins/**
-!jenkins/Dockerfile
+.volumes

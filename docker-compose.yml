@@ -41,12 +41,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - 80:80
+      - 22:22
     networks:
       - bridge_network
 
   db:
-    platform: linux/x86_64
     image: mysql:5.7
+    container_name: db
+    platform: linux/x86_64
     volumes:
       - db_data:/var/lib/mysql
     restart: always
